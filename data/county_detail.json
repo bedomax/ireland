@@ -1,0 +1,218 @@
+{
+  "Clare": {
+    "total": 288,
+    "with_eircode": 197,
+    "without_eircode": 91,
+    "eircode_pct": 68.4,
+    "primary": 280,
+    "top_activities": [
+      [
+        "Production",
+        275
+      ],
+      [
+        "Distribution/Placing on the market Storing",
+        2
+      ],
+      [
+        "Distribution/Placing on the market Preparation Production",
+        2
+      ],
+      [
+        "Distribution/Placing on the market Preparation Storing",
+        2
+      ],
+      [
+        "Preparation Production",
+        2
+      ]
+    ],
+    "top_categories": [
+      [
+        "a, b",
+        244
+      ],
+      [
+        "a, b, g",
+        25
+      ],
+      [
+        "d",
+        8
+      ],
+      [
+        "a",
+        6
+      ],
+      [
+        "a, d, e",
+        1
+      ]
+    ],
+    "locatable_eircode": 197,
+    "locatable_address": 91,
+    "not_locatable": 0
+  },
+  "Limerick": {
+    "total": 176,
+    "with_eircode": 85,
+    "without_eircode": 91,
+    "eircode_pct": 48.3,
+    "primary": 170,
+    "top_activities": [
+      [
+        "Production",
+        163
+      ],
+      [
+        "Preparation Production",
+        5
+      ],
+      [
+        "Distribution/Placing on the market Preparation Storing",
+        2
+      ],
+      [
+        "Distribution/Placing on the market Import Storing",
+        1
+      ],
+      [
+        "Distribution/Placing on the market Production",
+        1
+      ]
+    ],
+    "top_categories": [
+      [
+        "a, b",
+        156
+      ],
+      [
+        "a, b, g",
+        7
+      ],
+      [
+        "d",
+        5
+      ],
+      [
+        "a, b, d",
+        3
+      ],
+      [
+        "a",
+        3
+      ]
+    ],
+    "locatable_eircode": 85,
+    "locatable_address": 91,
+    "not_locatable": 0
+  },
+  "Tipperary": {
+    "total": 218,
+    "with_eircode": 161,
+    "without_eircode": 57,
+    "eircode_pct": 73.9,
+    "primary": 204,
+    "top_activities": [
+      [
+        "Production",
+        192
+      ],
+      [
+        "Preparation Production",
+        5
+      ],
+      [
+        "Distribution/Placing on the market Preparation Storing",
+        4
+      ],
+      [
+        "Import Production",
+        4
+      ],
+      [
+        "Preparation",
+        2
+      ]
+    ],
+    "top_categories": [
+      [
+        "a, b",
+        167
+      ],
+      [
+        "a",
+        19
+      ],
+      [
+        "a, b, g",
+        12
+      ],
+      [
+        "d",
+        11
+      ],
+      [
+        "a, b, d",
+        6
+      ]
+    ],
+    "locatable_eircode": 161,
+    "locatable_address": 57,
+    "not_locatable": 0
+  },
+  "Galway": {
+    "total": 424,
+    "with_eircode": 280,
+    "without_eircode": 144,
+    "eircode_pct": 66.0,
+    "primary": 396,
+    "top_activities": [
+      [
+        "Production",
+        388
+      ],
+      [
+        "Distribution/Placing on the market Preparation Storing",
+        4
+      ],
+      [
+        "Distribution/Placing on the market Preparation Production",
+        3
+      ],
+      [
+        "Preparation Production",
+        3
+      ],
+      [
+        "Distribution/Placing on the market Import Preparation Storing",
+        3
+      ]
+    ],
+    "top_categories": [
+      [
+        "a, b",
+        286
+      ],
+      [
+        "a, b, g",
+        90
+      ],
+      [
+        "d",
+        18
+      ],
+      [
+        "a",
+        15
+      ],
+      [
+        "c",
+        5
+      ]
+    ],
+    "locatable_eircode": 280,
+    "locatable_address": 144,
+    "not_locatable": 0
+  }
+}

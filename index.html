@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MWBD organic producers — density map</title>
+    <meta
+      name="description"
+      content="Geocode Irish organic operator addresses and Eircodes into coordinates to build a heat map of producer concentration."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <p class="eyebrow">Ireland · MWBD area</p>
+        <h1>Where organic producers concentrate</h1>
+        <p>
+          We convert addresses and Eircodes from the CSV into coordinates (lat/lon)
+          so each operator can be placed on a map and turned into a density heat map.
+        </p>
+      </div>
+      <div class="stats" aria-label="Dataset summary">
+        <div class="stat">
+          <strong id="stat-total">—</strong>
+          <span>Operators</span>
+        </div>
+        <div class="stat">
+          <strong id="stat-eircode">—</strong>
+          <span>With Eircode</span>
+        </div>
+        <div class="stat">
+          <strong id="stat-geocoded">—</strong>
+          <span>Geocoded</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="pipeline" aria-label="Pipeline status">
+      <ol class="pipeline-steps">
+        <li class="done">
+          <span class="step-label">CSV</span>
+          <span class="step-desc">Operators + address / Eircode</span>
+        </li>
+        <li class="current">
+          <span class="step-label">Zones</span>
+          <span class="step-desc">County density (current view)</span>
+        </li>
+        <li>
+          <span class="step-label">Geocoding</span>
+          <span class="step-desc">Address / Eircode → lat, lon</span>
+        </li>
+        <li>
+          <span class="step-label">Heatmap</span>
+          <span class="step-desc">True producer concentration</span>
+        </li>
+      </ol>
+      <p class="pipeline-note" id="pipeline-note">
+        The current view aggregates by county. The end goal is a point heat map
+        once addresses are geocoded.
+      </p>
+    </div>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <h2>Objective</h2>
+        <p class="hint">
+          Place each producer on the map from their address and Eircode,
+          and show where they cluster in the region (Clare, Galway, Limerick, Tipperary).
+        </p>
+
+        <div class="status-card" id="geocode-status">
+          <h3>Geocoding status</h3>
+          <p id="geocode-status-text">Loading…</p>
+          <div class="progress" aria-hidden="true">
+            <span id="geocode-progress" style="width: 0%"></span>
+          </div>
+        </div>
+
+        <h2>Interim view: by county</h2>
+        <p class="hint">
+          Until we have lat/lon, the map colours each zone by operator count.
+          Galway and Limerick merge city + county; Tipperary merges North + South.
+        </p>
+        <div id="legend" class="legend" aria-label="Colour legend"></div>
+        <h2>Counties</h2>
+        <ul id="county-list" class="county-list"></ul>
+        <div id="detail" class="detail-card empty"></div>
+      </aside>
+      <section class="map-wrap" aria-label="Map">
+        <div class="map-banner" id="map-banner">
+          Interim view · density by county · operator lat/lon pending
+        </div>
+        <div id="map"></div>
+        <aside id="inspector" class="inspector" hidden aria-live="polite">
+          <div class="inspector-head">
+            <div>
+              <p class="eyebrow" id="inspector-eyebrow">County detail</p>
+              <h2 id="inspector-title">Select a county</h2>
+            </div>
+            <button type="button" id="inspector-close" class="icon-btn" aria-label="Close panel">×</button>
+          </div>
+          <div id="inspector-body" class="inspector-body"></div>
+        </aside>
+      </section>
+    </main>
+
+    <div id="directory-modal" class="modal" hidden>
+      <div class="modal-backdrop" data-close-directory></div>
+      <div
+        class="modal-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="directory-title"
+      >
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow" id="directory-eyebrow">Producer directory</p>
+            <h2 id="directory-title">Producers</h2>
+            <p class="modal-sub" id="directory-sub">
+              Contact details available from the CSV (no email/phone in source).
+            </p>
+          </div>
+          <button
+            type="button"
+            id="directory-close"
+            class="icon-btn"
+            aria-label="Close directory"
+            data-close-directory
+          >
+            ×
+          </button>
+        </div>
+        <div class="modal-toolbar">
+          <label class="sr-only" for="directory-search">Search producers</label>
+          <input
+            id="directory-search"
+            type="search"
+            placeholder="Search name, address, Eircode, reference…"
+          />
+          <label class="sr-only" for="directory-locate">Locate filter</label>
+          <select id="directory-locate">
+            <option value="all">All locate paths</option>
+            <option value="eircode">Eircode</option>
+            <option value="address">Address only</option>
+          </select>
+          <label class="sr-only" for="directory-primary">Producer type</label>
+          <select id="directory-primary">
+            <option value="all">All operators</option>
+            <option value="yes">Primary producers</option>
+            <option value="no">Non-primary</option>
+          </select>
+        </div>
+        <p class="directory-meta" id="directory-meta"></p>
+        <div id="directory-list" class="directory-list"></div>
+      </div>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="js/map.js"></script>
+  </body>
+</html>

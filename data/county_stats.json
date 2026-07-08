@@ -1,0 +1,61 @@
+{
+  "source": "datasets/operators_in_MWBD.csv",
+  "total": 1106,
+  "counties": [
+    {
+      "county": "Galway",
+      "operators": 424,
+      "primary_yes": 396,
+      "primary_no": 28,
+      "certification": {
+        "Organic Trust CLG (OT)": 183,
+        "Irish Organic Association": 241
+      }
+    },
+    {
+      "county": "Clare",
+      "operators": 288,
+      "primary_yes": 280,
+      "primary_no": 8,
+      "certification": {
+        "Irish Organic Association": 136,
+        "Organic Trust CLG (OT)": 152
+      }
+    },
+    {
+      "county": "Tipperary",
+      "operators": 218,
+      "primary_yes": 204,
+      "primary_no": 14,
+      "certification": {
+        "Irish Organic Association": 143,
+        "Organic Trust CLG (OT)": 75
+      }
+    },
+    {
+      "county": "Limerick",
+      "operators": 176,
+      "primary_yes": 170,
+      "primary_no": 6,
+      "certification": {
+        "Organic Trust CLG (OT)": 44,
+        "Irish Organic Association": 132
+      }
+    }
+  ],
+  "by_county": {
+    "Galway": 424,
+    "Clare": 288,
+    "Tipperary": 218,
+    "Limerick": 176
+  },
+  "eircodes_present": 723,
+  "eircodes_missing": 383,
+  "primary_producers": 1050,
+  "geocoded": 0,
+  "pipeline": {
+    "step": "county_choropleth",
+    "next": "geocode_eircode_and_address",
+    "goal": "point_heatmap_of_organic_producer_density"
+  }
+}
